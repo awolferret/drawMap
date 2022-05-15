@@ -28,50 +28,9 @@ namespace ConsoleApp1
                     Console.WriteLine();
                 }
 
-                Console.SetCursorPosition(yPosition,xPosition);
-                Console.Write('@');
-                ConsoleKeyInfo input = Console.ReadKey();
+                MoveCharacter(ref xPosition,ref yPosition,ref score, map);
 
-                switch (input.Key)
-                {
-                    case ConsoleKey.UpArrow:
 
-                        if (map[xPosition - 1, yPosition] != '#')
-                        {
-                            xPosition--;
-                        }
-
-                        break;
-                    case ConsoleKey.DownArrow:
-
-                        if (map[xPosition + 1, yPosition] != '#')
-                        {
-                            xPosition++;
-                        }
-
-                        break;
-                    case ConsoleKey.LeftArrow:
-
-                        if (map[xPosition, yPosition - 1] != '#')
-                        {
-                            yPosition--;
-                        }
-
-                        break;
-                    case ConsoleKey.RightArrow:
-
-                        if (map[xPosition, yPosition + 1] != '#')
-                        {
-                            yPosition++;
-                        }
-
-                        break;
-                }
-                if (map[xPosition,yPosition] == '*')
-                {
-                    score++;
-                    Console.WriteLine("Вы победили");
-                }
 
                 Console.Clear();
             }
@@ -93,6 +52,55 @@ namespace ConsoleApp1
                 { '#','#','#','#','#','#','#','#','#','#' }
             };
             return map;
+        }
+
+        static void MoveCharacter(ref int yPosition,ref int xPosition,ref int score, char [,] map)
+        {
+            Console.SetCursorPosition(yPosition, xPosition);
+            Console.Write('@');
+            ConsoleKeyInfo input = Console.ReadKey();
+
+            switch (input.Key)
+            {
+                case ConsoleKey.UpArrow:
+
+                    if (map[xPosition - 1, yPosition] != '#')
+                    {
+                        xPosition--;
+                    }
+
+                    break;
+                case ConsoleKey.DownArrow:
+
+                    if (map[xPosition + 1, yPosition] != '#')
+                    {
+                        xPosition++;
+                    }
+
+                    break;
+                case ConsoleKey.LeftArrow:
+
+                    if (map[xPosition, yPosition - 1] != '#')
+                    {
+                        yPosition--;
+                    }
+
+                    break;
+                case ConsoleKey.RightArrow:
+
+                    if (map[xPosition, yPosition + 1] != '#')
+                    {
+                        yPosition++;
+                    }
+
+                    break;
+            }
+
+            if (map[xPosition, yPosition] == '*')
+            {
+                score++;
+                Console.WriteLine("Вы победили");
+            }
         }
     }
 }
