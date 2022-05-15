@@ -17,22 +17,22 @@ namespace ConsoleApp1
                 Console.Write("Достаньте *");
                 char[,] map = DrawMap();
                 Console.SetCursorPosition(0,0);
+                RenderMap(map);
+                MoveCharacter(ref xPosition,ref yPosition,ref score, map);
+                Console.Clear();
+            }
+        }
 
-                for (int i = 0; i < map.GetLength(0); i++)
+        static void RenderMap(char [,] map)
+        {
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    for (int j = 0; j < map.GetLength(1); j++)
-                    {
-                        Console.Write(map[i,j]);
-                    }
-
-                    Console.WriteLine();
+                    Console.Write(map[i, j]);
                 }
 
-                MoveCharacter(ref xPosition,ref yPosition,ref score, map);
-
-
-
-                Console.Clear();
+                Console.WriteLine();
             }
         }
 
