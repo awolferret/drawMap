@@ -15,24 +15,10 @@ namespace ConsoleApp1
             {
                 Console.SetCursorPosition(0, 20);
                 Console.Write("Достаньте *");
-                char[,] map = DrawMap();
                 Console.SetCursorPosition(0,0);
-                RenderMap(map);
+                char[,] map = DrawMap();
                 MoveCharacter(ref xPosition,ref yPosition,ref score, map);
                 Console.Clear();
-            }
-        }
-
-        static void RenderMap(char [,] map)
-        {
-            for (int i = 0; i < map.GetLength(0); i++)
-            {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {
-                    Console.Write(map[i, j]);
-                }
-
-                Console.WriteLine();
             }
         }
 
@@ -51,6 +37,17 @@ namespace ConsoleApp1
                 { '#',' ','#',' ',' ',' ',' ',' ','*','#' },
                 { '#','#','#','#','#','#','#','#','#','#' }
             };
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    Console.Write(map[i, j]);
+                }
+
+                Console.WriteLine();
+            }
+
             return map;
         }
 
@@ -66,7 +63,9 @@ namespace ConsoleApp1
 
                     if (map[xPosition - 1, yPosition] != '#')
                     {
-                        xPosition--;
+                        int xPositionMove = -1;
+                        int yPositionMove = 0;
+                        Move(map,ref xPosition,ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -74,7 +73,9 @@ namespace ConsoleApp1
 
                     if (map[xPosition + 1, yPosition] != '#')
                     {
-                        xPosition++;
+                        int xPositionMove = 1;
+                        int yPositionMove = 0;
+                        Move(map, ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -82,7 +83,9 @@ namespace ConsoleApp1
 
                     if (map[xPosition, yPosition - 1] != '#')
                     {
-                        yPosition--;
+                        int xPositionMove = 0;
+                        int yPositionMove = -1;
+                        Move(map, ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -90,7 +93,9 @@ namespace ConsoleApp1
 
                     if (map[xPosition, yPosition + 1] != '#')
                     {
-                        yPosition++;
+                        int xPositionMove = 0;
+                        int yPositionMove = 1;
+                        Move(map, ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -101,6 +106,12 @@ namespace ConsoleApp1
                 score++;
                 Console.WriteLine("Вы победили");
             }
+        }
+
+        static void Move(char [,] map,ref int xPosition, ref int yPosition, int xPositionMove,int yPositionMove)
+        {
+            xPosition += xPositionMove;
+            yPosition += yPositionMove;
         }
     }
 }
