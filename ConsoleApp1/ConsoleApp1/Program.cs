@@ -10,19 +10,22 @@ namespace ConsoleApp1
             int score = 0;
             int xPosition = 1;
             int yPosition = 1;
+            int xPositionMove = 0;
+            int yPositionMove = 0;
 
             while (score != 1)
             {
                 Console.SetCursorPosition(0, 20);
                 Console.Write("Достаньте *");
-                Console.SetCursorPosition(0,0);
-                char[,] map = DrawMap();
-                MoveCharacter(ref xPosition,ref yPosition,ref score, map);
+                Console.SetCursorPosition(0, 0);
+                char[,] map = SetMap();
+                DrawMap(map);
+                MoveCharacter(ref xPosition, ref yPosition, ref score, xPositionMove, yPositionMove, map);
                 Console.Clear();
             }
         }
 
-        static char[,] DrawMap()
+        static char[,] SetMap()
         {
             char[,] map = {
                 { '#','#','#','#','#','#','#','#','#','#' },
@@ -37,21 +40,22 @@ namespace ConsoleApp1
                 { '#',' ','#',' ',' ',' ',' ',' ','*','#' },
                 { '#','#','#','#','#','#','#','#','#','#' }
             };
+            return map;
+        }
 
+        static void DrawMap(char[,] map)
+        {
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
                     Console.Write(map[i, j]);
                 }
-
                 Console.WriteLine();
             }
-
-            return map;
         }
 
-        static void MoveCharacter(ref int yPosition,ref int xPosition,ref int score, char [,] map)
+        static void MoveCharacter(ref int yPosition, ref int xPosition, ref int score, int xPositionMove, int yPositionMove, char[,] map)
         {
             Console.SetCursorPosition(yPosition, xPosition);
             Console.Write('@');
@@ -63,9 +67,8 @@ namespace ConsoleApp1
 
                     if (map[xPosition - 1, yPosition] != '#')
                     {
-                        int xPositionMove = -1;
-                        int yPositionMove = 0;
-                        Move(map,ref xPosition,ref yPosition, xPositionMove, yPositionMove);
+                        xPositionMove = -1;
+                        Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -73,9 +76,8 @@ namespace ConsoleApp1
 
                     if (map[xPosition + 1, yPosition] != '#')
                     {
-                        int xPositionMove = 1;
-                        int yPositionMove = 0;
-                        Move(map, ref xPosition, ref yPosition, xPositionMove, yPositionMove);
+                        xPositionMove = 1;
+                        Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -83,9 +85,8 @@ namespace ConsoleApp1
 
                     if (map[xPosition, yPosition - 1] != '#')
                     {
-                        int xPositionMove = 0;
-                        int yPositionMove = -1;
-                        Move(map, ref xPosition, ref yPosition, xPositionMove, yPositionMove);
+                        yPositionMove = -1;
+                        Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -93,25 +94,29 @@ namespace ConsoleApp1
 
                     if (map[xPosition, yPosition + 1] != '#')
                     {
-                        int xPositionMove = 0;
-                        int yPositionMove = 1;
-                        Move(map, ref xPosition, ref yPosition, xPositionMove, yPositionMove);
+                        yPositionMove = 1;
+                        Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
             }
+            Win(map, xPosition, yPosition, ref score);
+        }
+
+        static void Move(ref int xPosition, ref int yPosition, int xPositionMove = 0, int yPositionMove = 0)
+        {
+            xPosition += xPositionMove;
+            yPosition += yPositionMove;
+        }
+
+        static void Win(char[,] map, int xPosition, int yPosition, ref int score)
+        {
 
             if (map[xPosition, yPosition] == '*')
             {
                 score++;
                 Console.WriteLine("Вы победили");
             }
-        }
-
-        static void Move(char [,] map,ref int xPosition, ref int yPosition, int xPositionMove,int yPositionMove)
-        {
-            xPosition += xPositionMove;
-            yPosition += yPositionMove;
         }
     }
 }
