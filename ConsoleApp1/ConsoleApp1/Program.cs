@@ -68,7 +68,6 @@ namespace ConsoleApp1
                     if (map[xPosition - 1, yPosition] != '#')
                     {
                         xPositionMove = -1;
-                        Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -77,7 +76,6 @@ namespace ConsoleApp1
                     if (map[xPosition + 1, yPosition] != '#')
                     {
                         xPositionMove = 1;
-                        Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -86,7 +84,6 @@ namespace ConsoleApp1
                     if (map[xPosition, yPosition - 1] != '#')
                     {
                         yPositionMove = -1;
-                        Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
 
                     break;
@@ -95,11 +92,10 @@ namespace ConsoleApp1
                     if (map[xPosition, yPosition + 1] != '#')
                     {
                         yPositionMove = 1;
-                        Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
                     }
-
                     break;
             }
+            Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
 
             if (map[xPosition, yPosition] == '*')
             {
