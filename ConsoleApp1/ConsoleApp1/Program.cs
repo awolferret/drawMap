@@ -100,7 +100,11 @@ namespace ConsoleApp1
 
                     break;
             }
-            Win(map, xPosition, yPosition, ref score);
+
+            if (map[xPosition, yPosition] == '*')
+            {
+                Win(ref score);
+            }
         }
 
         static void Move(ref int xPosition, ref int yPosition, int xPositionMove = 0, int yPositionMove = 0)
@@ -109,14 +113,10 @@ namespace ConsoleApp1
             yPosition += yPositionMove;
         }
 
-        static void Win(char[,] map, int xPosition, int yPosition, ref int score)
+        static void Win(ref int score)
         {
-
-            if (map[xPosition, yPosition] == '*')
-            {
-                score++;
-                Console.WriteLine("Вы победили");
-            }
+            score++;
+            Console.WriteLine("Вы победили");
         }
     }
 }
