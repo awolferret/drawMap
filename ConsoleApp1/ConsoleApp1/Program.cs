@@ -12,14 +12,16 @@ namespace ConsoleApp1
             int yPosition = 1;
             int xPositionMove = 0;
             int yPositionMove = 0;
+            char[,] map = SetMap();
 
             while (score != 1)
             {
                 Console.SetCursorPosition(0, 20);
                 Console.Write("Достаньте *");
                 Console.SetCursorPosition(0, 0);
-                char[,] map = SetMap();
                 DrawMap(map);
+                Console.SetCursorPosition(yPosition, xPosition);
+                Console.Write('@');
                 MoveCharacter(ref xPosition, ref yPosition, ref score, xPositionMove, yPositionMove, map);
                 Console.Clear();
             }
@@ -51,14 +53,13 @@ namespace ConsoleApp1
                 {
                     Console.Write(map[i, j]);
                 }
+
                 Console.WriteLine();
             }
         }
 
-        static void MoveCharacter(ref int yPosition, ref int xPosition, ref int score, int xPositionMove, int yPositionMove, char[,] map)
+        static void MoveCharacter(ref int xPosition, ref int yPosition, ref int score, int xPositionMove, int yPositionMove, char[,] map)
         {
-            Console.SetCursorPosition(yPosition, xPosition);
-            Console.Write('@');
             ConsoleKeyInfo input = Console.ReadKey();
 
             switch (input.Key)
@@ -107,6 +108,9 @@ namespace ConsoleApp1
         {
             xPosition += xPositionMove;
             yPosition += yPositionMove;
+
+            Console.SetCursorPosition(yPosition, xPosition);
+            Console.Write('@');
         }
 
         static void Win(ref int score)
