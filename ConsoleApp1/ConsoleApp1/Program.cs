@@ -7,14 +7,12 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            int score = 0;
+            bool isWin = false;
             int xPosition = 1;
             int yPosition = 1;
-            int xPositionMove = 0;
-            int yPositionMove = 0;
-            char[,] map = SetMap();
+            char[,] map = CreateMap();
 
-            while (score != 1)
+            while (isWin == false)
             {
                 Console.SetCursorPosition(0, 20);
                 Console.Write("Достаньте *");
@@ -22,12 +20,12 @@ namespace ConsoleApp1
                 DrawMap(map);
                 Console.SetCursorPosition(yPosition, xPosition);
                 Console.Write('@');
-                MoveCharacter(ref xPosition, ref yPosition, ref score, xPositionMove, yPositionMove, map);
+                MoveCharacter(ref xPosition, ref yPosition, ref isWin, map);
                 Console.Clear();
             }
         }
 
-        static char[,] SetMap()
+        static char[,] CreateMap()
         {
             char[,] map = {
                 { '#','#','#','#','#','#','#','#','#','#' },
@@ -58,64 +56,47 @@ namespace ConsoleApp1
             }
         }
 
-        static void MoveCharacter(ref int xPosition, ref int yPosition, ref int score, int xPositionMove, int yPositionMove, char[,] map)
+        static void MoveCharacter(ref int xPosition, ref int yPosition, ref bool isWin, char[,] map )
         {
+            int xPositionMove = 0;
+            int yPositionMove = 0;
             ConsoleKeyInfo input = Console.ReadKey();
 
             switch (input.Key)
             {
                 case ConsoleKey.UpArrow:
-
-                    if (map[xPosition - 1, yPosition] != '#')
-                    {
-                        xPositionMove = -1;
-                    }
-
+                xPositionMove = -1;
                     break;
                 case ConsoleKey.DownArrow:
-
-                    if (map[xPosition + 1, yPosition] != '#')
-                    {
-                        xPositionMove = 1;
-                    }
-
+                xPositionMove = 1;
                     break;
                 case ConsoleKey.LeftArrow:
-
-                    if (map[xPosition, yPosition - 1] != '#')
-                    {
-                        yPositionMove = -1;
-                    }
-
+                yPositionMove = -1;
                     break;
                 case ConsoleKey.RightArrow:
-
-                    if (map[xPosition, yPosition + 1] != '#')
-                    {
-                        yPositionMove = 1;
-                    }
+                yPositionMove = 1;
                     break;
             }
-            Move(ref xPosition, ref yPosition, xPositionMove, yPositionMove);
+            Move(ref xPosition, ref yPosition, ref isWin, map, xPositionMove, yPositionMove);
+        }
 
+        static void Move(ref int xPosition, ref int yPosition,ref bool isWin, char[,] map, int xPositionMove = 0, int yPositionMove = 0)
+        {
+            if (map[xPosition + xPositionMove,yPosition + yPositionMove] != '#')
+            {
+                xPosition += xPositionMove;
+                yPosition += yPositionMove;
+            }
             if (map[xPosition, yPosition] == '*')
             {
-                Win(ref score);
+                Win(ref isWin);
             }
         }
 
-        static void Move(ref int xPosition, ref int yPosition, int xPositionMove = 0, int yPositionMove = 0)
+        static void Win(ref bool isWin)
         {
-            xPosition += xPositionMove;
-            yPosition += yPositionMove;
-
-            Console.SetCursorPosition(yPosition, xPosition);
-            Console.Write('@');
-        }
-
-        static void Win(ref int score)
-        {
-            score++;
+            isWin = true;
+            Console.SetCursorPosition(0, 20);
             Console.WriteLine("Вы победили");
         }
     }
