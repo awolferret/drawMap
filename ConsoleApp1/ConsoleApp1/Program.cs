@@ -4,7 +4,7 @@ namespace ConsoleApp1
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.CursorVisible = false;
             bool isWin = false;
@@ -14,7 +14,6 @@ namespace ConsoleApp1
             int yMoveDirection;
             char[,] map = CreateMap();
 
-
             while (isWin == false)
             {
                 Console.SetCursorPosition(0, 20);
@@ -23,12 +22,13 @@ namespace ConsoleApp1
                 DrawMap(map);
                 Console.SetCursorPosition(yPosition, xPosition);
                 Console.Write('@');
-                ChoosingDirection(out xMoveDirection, out yMoveDirection);
+                ChooseDirection(out xMoveDirection, out yMoveDirection);
                 Move(ref xPosition, ref yPosition, map,xMoveDirection,yMoveDirection);
 
                 if (map[xPosition, yPosition] == '*')
                 {
-                    Win(ref isWin);
+                    isWin = true;
+                    ShowMassage();
                 }
 
                 Console.Clear();
@@ -66,7 +66,7 @@ namespace ConsoleApp1
             }
         }
 
-        static void ChoosingDirection(out int xMoveDirection,out int yMoveDirection)
+        static void ChooseDirection(out int xMoveDirection,out int yMoveDirection)
         {
             xMoveDirection = 0;
             yMoveDirection = 0;
@@ -98,9 +98,8 @@ namespace ConsoleApp1
             }
         }
 
-        static void Win(ref bool isWin)
+        static void ShowMassage()
         {
-            isWin = true;
             Console.SetCursorPosition(0, 20);
             Console.WriteLine("Вы победили");
         }
