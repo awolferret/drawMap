@@ -10,7 +10,10 @@ namespace ConsoleApp1
             bool isWin = false;
             int xPosition = 1;
             int yPosition = 1;
+            int xMoveDirection;
+            int yMoveDirection;
             char[,] map = CreateMap();
+
 
             while (isWin == false)
             {
@@ -20,7 +23,14 @@ namespace ConsoleApp1
                 DrawMap(map);
                 Console.SetCursorPosition(yPosition, xPosition);
                 Console.Write('@');
-                MoveCharacter(ref xPosition, ref yPosition, ref isWin, map);
+                ChoosingDirection(out xMoveDirection, out yMoveDirection);
+                Move(ref xPosition, ref yPosition, map,xMoveDirection,yMoveDirection);
+
+                if (map[xPosition, yPosition] == '*')
+                {
+                    Win(ref isWin);
+                }
+
                 Console.Clear();
             }
         }
@@ -56,40 +66,35 @@ namespace ConsoleApp1
             }
         }
 
-        static void MoveCharacter(ref int xPosition, ref int yPosition, ref bool isWin, char[,] map )
+        static void ChoosingDirection(out int xMoveDirection,out int yMoveDirection)
         {
-            int xPositionMove = 0;
-            int yPositionMove = 0;
+            xMoveDirection = 0;
+            yMoveDirection = 0;
             ConsoleKeyInfo input = Console.ReadKey();
 
             switch (input.Key)
             {
                 case ConsoleKey.UpArrow:
-                xPositionMove = -1;
+                xMoveDirection = -1;
                     break;
                 case ConsoleKey.DownArrow:
-                xPositionMove = 1;
+                xMoveDirection = 1;
                     break;
                 case ConsoleKey.LeftArrow:
-                yPositionMove = -1;
+                yMoveDirection = -1;
                     break;
                 case ConsoleKey.RightArrow:
-                yPositionMove = 1;
+                yMoveDirection = 1;
                     break;
             }
-            Move(ref xPosition, ref yPosition, ref isWin, map, xPositionMove, yPositionMove);
         }
 
-        static void Move(ref int xPosition, ref int yPosition,ref bool isWin, char[,] map, int xPositionMove = 0, int yPositionMove = 0)
+        static void Move(ref int xPosition, ref int yPosition, char[,] map, int xMoveDirection = 0, int yMoveDirection = 0)
         {
-            if (map[xPosition + xPositionMove,yPosition + yPositionMove] != '#')
+            if (map[xPosition + xMoveDirection,yPosition + yMoveDirection] != '#')
             {
-                xPosition += xPositionMove;
-                yPosition += yPositionMove;
-            }
-            if (map[xPosition, yPosition] == '*')
-            {
-                Win(ref isWin);
+                xPosition += xMoveDirection;
+                yPosition += yMoveDirection;
             }
         }
 
