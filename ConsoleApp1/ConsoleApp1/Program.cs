@@ -28,7 +28,7 @@ namespace ConsoleApp1
                 if (map[xPosition, yPosition] == '*')
                 {
                     isWin = true;
-                    ShowMassage();
+                    ShowMessage();
                 }
 
                 Console.Clear();
@@ -98,7 +98,7 @@ namespace ConsoleApp1
             }
         }
 
-        static void ShowMassage()
+        static void ShowMessage()
         {
             Console.SetCursorPosition(0, 20);
             Console.WriteLine("Вы победили");
